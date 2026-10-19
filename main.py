@@ -9,6 +9,15 @@ class Operands(BaseModel):
     b: float
     
 items = {1: {"name": "item1"}, 2: {"name": "item2"}, 3: {"name": "item3"}}
+class Item(BaseModel):
+    name: str
+
+@app.put("/update/{id}")
+def update(id: int, item: Item):
+    if id not in items:
+        raise HTTPException(status_code=404, detail="Item introuvable")
+    items[id] = item.model_dump()
+    return {"id": id, "item": items[id]}
 
 @app.delete("/remove/{id}")
 def remove(id: int):
