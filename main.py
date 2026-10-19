@@ -1,14 +1,20 @@
 import socket
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI()
+class Operands(BaseModel):
+    a: float
+    b: float
 
 @app.get("/")
 def read_root():
     return {"message": "it works !"}
 
-
+@app.post("/multiply")
+def multiply(op: Operands):
+    return {"result a*b=": op.a * op.b}
 @app.get("/greeting")
 def greeting(name: str):
     hostname = socket.gethostname()
