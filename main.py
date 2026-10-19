@@ -7,7 +7,15 @@ app = FastAPI()
 class Operands(BaseModel):
     a: float
     b: float
+    
+items = {1: {"name": "item1"}, 2: {"name": "item2"}, 3: {"name": "item3"}}
 
+@app.delete("/remove/{id}")
+def remove(id: int):
+    if id not in items:
+        raise HTTPException(status_code=404, detail="Item introuvable")
+    del items[id]
+    return {"message": f"Item {id} supprimé"}
 @app.get("/")
 def read_root():
     return {"message": "it works !"}
