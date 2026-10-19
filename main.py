@@ -1,3 +1,5 @@
+import socket
+
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -5,7 +7,7 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     return {"message": "it works !"}
-@app.get("/addition")
+
 
 @app.get("/greeting")
 def greeting(name: str):
@@ -30,4 +32,4 @@ def greeting(name: str):
 @app.get("/addition")
 def addition(a: float, b: float):
     return {"result a+b=": a + b, "developer": "Dev1"}
-main
+
