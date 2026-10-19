@@ -1,0 +1,32 @@
+diff --git a/main.py b/main.py
+index 7592cb9..bdff089 100644
+--- a/main.py
++++ b/main.py
+@@ -1,14 +1,25 @@
+ import socket
+ 
+-from fastapi import FastAPI
++from fastapi import FastAPI, HTTPException
++from pydantic import BaseModel
+ 
+ app = FastAPI()
++class Operands(BaseModel):
++    a: float
++    b: float
+ 
+ @app.get("/")
+ def read_root():
+     return {"message": "it works !"}
+ 
+-
++@app.post("/multiply")
++def multiply(op: Operands):
++    return {"result a*b=": op.a * op.b}
++@app.post("/divide")
++def divide(op: Operands):
++    if op.b == 0:
++        raise HTTPException(status_code=400, detail="Division par zéro impossible")
++    return {"result a/b=": op.a / op.b}
+ @app.get("/greeting")
+ def greeting(name: str):
+     hostname = socket.gethostname()
