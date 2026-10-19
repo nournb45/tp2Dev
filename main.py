@@ -15,6 +15,11 @@ def read_root():
 @app.post("/multiply")
 def multiply(op: Operands):
     return {"result a*b=": op.a * op.b}
+@app.post("/divide")
+def divide(op: Operands):
+    if op.b == 0:
+        raise HTTPException(status_code=400, detail="Division par zéro impossible")
+    return {"result a/b=": op.a / op.b}
 @app.get("/greeting")
 def greeting(name: str):
     hostname = socket.gethostname()
