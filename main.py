@@ -6,10 +6,6 @@ app = FastAPI()
 def read_root():
     return {"message": "it works !"}
 @app.get("/addition")
-def addition(a: int, b: int):
-    return {"result a+b=": a + b, "developer": "Dev1"}
- feature/greeting
-import socket
 
 @app.get("/greeting")
 def greeting(name: str):
